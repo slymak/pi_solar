@@ -2,28 +2,26 @@
 import RPi.GPIO as GPIO
 import time
 
-in1 = 22  #ze solaru
-in2 = 23  # zarovka
-in3 = 24  
-in4 = 25  # 230V
+solar = 22  #ze solaru
+load = 23  # zarovka
+in3 = 24
+grid = 25  # 230V
 
+GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
-#GPIO.setup(in1, GPIO.OUT)
-GPIO.setup(in2, GPIO.OUT)
-#GPIO.setup(in3, GPIO.OUT)
-#GPIO.setup(in4, GPIO.OUT)
+GPIO.setup(solar, GPIO.OUT)
+#GPIO.setup(load, GPIO.OUT)
+#GPIO.setup(grid, GPIO.OUT)
 
-
-#GPIO.output(in1, GPIO.LOW)
-GPIO.output(in2, GPIO.LOW)
-#GPIO.output(in3, GPIO.LOW)
-#GPIO.output(in4, GPIO.LOW)
+				# ON
+#GPIO.output(solar, GPIO.LOW)
+#GPIO.output(load, GPIO.LOW)
+#GPIO.output(grid, GPIO.LOW)
 #time.sleep(3)
-
-#GPIO.output(in1, GPIO.HIGH)
-#GPIO.output(in2, GPIO.HIGH)
-#GPIO.output(in3, GPIO.HIGH)
-#GPIO.output(in4, GPIO.HIGH)
+				# off
+GPIO.output(solar, GPIO.HIGH)
+#GPIO.output(load, GPIO.HIGH)
+#GPIO.output(grid, GPIO.HIGH)
 
 #GPIO.cleanup()
 

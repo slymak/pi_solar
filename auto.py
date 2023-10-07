@@ -87,7 +87,7 @@ while True:
         time.sleep(pause)
         read_ina()
         ina = read_ina()
-        if ina['solar'] > ina['baterry'] and ina['solar'] > 13.0:
+        if ina['solar'] > ina['baterry'] and ina['solar'] > 13.8:
             GPIO.output(pingrid, GPIO.LOW)
             print(f" 230V off, prave se sit vypla {ina['baterry']}")
             logging.warning(f" 230V switch off now, solar {ina['solar']} battery {ina['baterry']}")
@@ -105,7 +105,7 @@ while True:
         read_ina()
         ina = read_ina()
 
-        if ina['baterry'] > 13.2 and ina['load_off'] == True:
+        if ina['baterry'] > 13.6 and ina['load_off'] == True:
             GPIO.output(pinload, GPIO.LOW)
             print(f" load switch ON, baterka ma: {ina['baterry']} ze solaru jde:{ina['solar']}")
             logging.warning(f" load switch ON now, solar {ina['solar']} battery {ina['baterry']}")
@@ -114,7 +114,7 @@ while True:
             ina = read_ina()
             time.sleep(3)
 
-        if ina['baterry'] > 13.4 and ina['solar_on'] == True:
+        if ina['baterry'] > 13.9 and ina['solar_on'] == True:
             GPIO.output(pinsolar, GPIO.HIGH)
             print(f" solar switch off now, baterka ma: {ina['baterry']} solar je:{ina['solar']}")
             logging.warning(f" solar switch off now, solar {ina['solar']} battery {ina['baterry']}")
@@ -132,7 +132,7 @@ while True:
             ina = read_ina()
             time.sleep(3)
 
-        if ina['baterry'] < 12.7 and ina['load_on'] == True:
+        if ina['baterry'] < 12.8 and ina['load_on'] == True:
             GPIO.output(pinload, GPIO.HIGH)
             print(f" load switch off,baterka ma: {ina['baterry']} solar je:{ina['solar']}")
             logging.warning(f" load switch off now, solar {ina['solar']} battery {ina['baterry']}")
@@ -141,7 +141,7 @@ while True:
             ina = read_ina()
             time.sleep(3)
 
-        if ina['baterry'] < 12.4:
+        if ina['baterry'] < 12.5:
             GPIO.output(pingrid, GPIO.HIGH)
             print(f" zapiname 230V zacina grid_on")
             logging.warning(f" grid switch ON now, solar {ina['solar']} battery {ina['baterry']}")

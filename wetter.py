@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 import wetteronline
+w = wetteronline.weather("wetter/nove-mesto-pod-smrkem")
+
 
 #l = wetteronline.location("Nové Město pod Smrkem")
 #print(l.url)
 #print(l.autosuggests)
-w = wetteronline.weather("wetter/nove-mesto-pod-smrkem")
 
 #print(w.temperature_now)
 #print(w.forecast_24h[list(w.forecast_24h)[0]])
@@ -34,10 +35,31 @@ def extract_sunhours(weather_data):
   return sun_hours
 
 sun_hours = extract_sunhours(w.forecast_4d)
-first_hour = sun_hours[0]
-print(first_hour)
+first_hour = str(sun_hours[0])
 
-#f = open("sunhours.txt", "w")
-#f.write(",".join(sun_hours))
-#f.close
-#print(type(w.forecast_4d["18.10."]["sunHours"]))
+# print(first_hour)
+
+if first_hour == 0:
+  baterry_value = 12.8
+  solar_value = 13.6
+elif first_hour == 1:
+  baterry_value = 12.6
+  solar_value = 13.5
+elif first_hour == 2:
+  baterry_value = 12.4
+  solar_value = 13.3
+elif first_hour == 3:
+  baterry_value = 12.3
+  solar_value = 13.1
+elif first_hour > 3:
+  baterry_value = 12.1
+  solar_value = 12.8  
+
+f = open("baterry_value", "w")
+f.write(str(baterry_value))
+f.close
+
+
+f = open("solar_value", "w")
+f.write(str(solar_value))
+f.close

@@ -65,26 +65,13 @@ else:
     solar_off = False
     print(f"   solar ma _on {solar_on} off {solar_off} ")
 
-# ina = dict()
-# 'atmel'] = atmel
-# 'solar'] = solar
-# 'baterry'] = baterry
-# 'grid_on'] = grid_on
-# 'grid_off'] = grid_off
-# 'load_on'] = load_on
-# 'load_off'] = load_off
-# 'solar_on'] = solar_on
-# 'solar_off'] = solar_off
-
-# return ina
 
 #---------------- main -------------------------
 
-# read_ina()
-# ina = read_ina()
+
 ################# grid on ##############################################
 
-if grid_on == True and solar > baterry and solar > 13.3:
+if grid_on == True and solar > baterry and solar > solar_value:
     GPIO.output(pingrid, GPIO.LOW)
     print(f" 230V off, prave se sit vypla {baterry}")
     logging.warning(f" 230V switch off now, solar {solar} battery {baterry}")
@@ -112,7 +99,7 @@ if grid_on == False and baterry < 12.8 and load_on == True:
     print(f" load switch off,baterka ma: {baterry} solar je:{solar}")
     logging.warning(f" load switch off now, solar {solar} battery {baterry}")
     
-if grid_on == False and baterry < 12.5:
+if grid_on == False and baterry < battery_value:
     GPIO.output(pingrid, GPIO.HIGH)
     print(f" zapiname 230V zacina grid_on")
     logging.warning(f" grid switch ON now, solar {solar} battery {baterry}")

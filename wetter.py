@@ -34,8 +34,8 @@ def extract_sunhours(weather_data):
   return sun_hours
 
 sun_hours = extract_sunhours(w.forecast_4d)
-
-print(sun_hours)
+first_hour = sun_hours[0]
+print(first_hour)
 
 #f = open("sunhours.txt", "w")
 #f.write(",".join(sun_hours))

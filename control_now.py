@@ -16,8 +16,8 @@ pinload = 23           #load h4 bulb 4A
 pinrele3 = 24           #not use
 pingrid = 25           #grid 230v
 
-solar_value = 13.3
-battery_value = 12.4
+solar_value = 13.5
+battery_value = 12.6
 
 #reley
 GPIO.setwarnings(False)

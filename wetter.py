@@ -35,9 +35,9 @@ def extract_sunhours(weather_data):
   return sun_hours
 
 sun_hours = extract_sunhours(w.forecast_4d)
-first_hour = str(sun_hours[0])
+first_hour = sun_hours[0]
 
-# print(first_hour)
+print(first_hour)
 
 if first_hour == 0:
   baterry_value = 12.8

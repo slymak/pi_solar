@@ -42,6 +42,7 @@ atmel = float("{:.2f}".format(ina3221.bus_voltage(1)))
 solar = float("{:.2f}".format(ina3221.bus_voltage(2)))
 battery = float("{:.2f}".format(ina3221.bus_voltage(3)))
 
+#dwf time and output
 time.sleep(1)
 dts = datetime.now()
 dt  = dts.strftime('%Y-%m-%d %H:%M')
@@ -50,37 +51,49 @@ statusgrid = GPIO.input(pingrid)
 if statusgrid:
     grid_on = True
     grid_off = False
+    grid_graph =  12.6
+    #print(f"{dt}  grid ON U set {solar_value} U real {solar} bat set {battery_value} real {battery}")
 else:
     grid_on = False
     grid_off = True
-    print(f"{dt}  grid_off {grid_off} ")
+    grid_graph = 12.4
+    print(f"{dt}  grid_off U set {solar_value} U real {solar} bat set {battery_value} real {battery}")
 
 statusload = GPIO.input(pinload)
 if statusload:
     load_on = False
     load_off = True
-    print(f"{dt}   load ma on {load_on} _off {load_off} ")
+    load_graph = 12.8
 else:
     load_on = True
     load_off = False
+    load_graph = 13
+    print(f"{dt}   load on ma {load_on} U set {solar_value} U real {solar} bat set {battery_value} real {battery}")
 
 statussolar = GPIO.input(pinsolar)
 if statussolar:
-    solar_on = True
-    solar_off = False
+    solar_on = False
+    solar_off = True
+    solar_graph = 14.2
+    print(f"{dt} solar on {solar_on} volty set {solar_value} real {solar} baterka set {battery_value} real {battery}")
 else:
     solar_on = True
     solar_off = False
-    print(f"{dt} solar on {solar_on} volty set {solar_value} real {solar} baterka set {battery_value} real {battery}")
+    solar_graph = 14
+
+
+# writes values into files
+output = open("/var/www/html/digivoltnovakov/output", "a")
+#output.write(str(dt) + " " + str(solar) + " " + str(battery) +"\n")
+output.write(f"{dt} {solar} {battery} {grid_graph} {load_graph} {solar_graph}\n")
+output.close
 
 #---------------- main -------------------------
-
-
 ################# grid on ##############################################
 
-if grid_on == True and solar > battery and solar > solar_value:
+if grid_on == True and solar_on == True and solar > battery and solar > solar_value:
     GPIO.output(pingrid, GPIO.LOW)
-    print(f"{dt} 230V off, prave se sit vypla {battery}")
+    print(f"{dt} 230V off, prave se sit vypla U set {solar_value} U real {solar} bat set {battery_value} real {battery}")
     logging.warning(f" 230V switch off, solar set {solar_value} real {solar} battery set {battery_value} real {battery}")
     
 # ################# off grid ###############################################
@@ -91,7 +104,7 @@ if grid_on == False and battery > 13.6 and load_off == True:
     print(f"{dt} LOAD switch ON, baterka ma: {battery} ze solaru jde:{solar}")
     logging.warning(f" load switch ON now, solar {solar} battery {battery}")
     
-if grid_on == False and battery > 13.9 and solar_on == True:
+if grid_on == False and battery > 14.1 and solar_on == True:
     GPIO.output(pinsolar, GPIO.HIGH)
     print(f"{dt} SOLAR switch off, baterka ma: {battery} solar je:{solar}")
     logging.warning(f" solar switch off now, solar {solar} battery {battery}")
@@ -101,12 +114,13 @@ if grid_on == False and battery < 13.3 and solar_off == True:
     print(f"{dt} solar switch ON now, baterka ma: {battery} solar je:{solar}")
     logging.warning(f" solar switch ON now, solar {solar} battery {battery}")
     
-if grid_on == False and battery < 12.8 and load_on == True:
+if grid_on == False and battery < 13.2 and load_on == True:
     GPIO.output(pinload, GPIO.HIGH)
     print(f"{dt} load switch off,baterka ma: {battery} solar je:{solar}")
     logging.warning(f" load switch off now, solar {solar} battery {battery}")
     
 if grid_on == False and battery < battery_value:
     GPIO.output(pingrid, GPIO.HIGH)
-    print(f"{dt} zapiname 230V zacina grid_on")
+    print(f"{dt} zapiname 230V grid_on U set {solar_value} U real {solar} bat set {battery_value} real {battery}")
     logging.warning(f" grid switch ON now, solar {solar} battery {battery}")
+

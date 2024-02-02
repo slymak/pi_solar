@@ -55,17 +55,17 @@ elif first_hour == 2:
   battery_value = 12.7
   solar_value = 13.4
 elif first_hour == 3:
-  battery_value = 12.5
+  battery_value = 12.4
   solar_value = 13.2
 elif first_hour == 4:
-  battery_value = 12.5
-  solar_value = 13.1
+  battery_value = 12.3
+  solar_value = 13
 elif first_hour == 5:
-  battery_value = 12.5
+  battery_value = 12.2
   solar_value = 13
 elif first_hour == 6:
   battery_value = 12.2
-  solar_value = 13.2
+  solar_value = 13
 elif first_hour > 6:
   battery_value = 12.1
   solar_value = 12.8

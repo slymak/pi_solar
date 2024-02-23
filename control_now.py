@@ -91,7 +91,7 @@ output.close
 #---------------- main -------------------------
 ################# grid on ##############################################
 
-if grid_on == True and solar_on == True and solar > battery and solar > solar_value:
+if grid_on == True and solar > battery and solar > solar_value:
     GPIO.output(pingrid, GPIO.LOW)
     print(f"{dt} 230V off, prave se sit vypla U set {solar_value} U real {solar} bat set {battery_value} real {battery}")
     logging.warning(f" 230V switch off, solar set {solar_value} real {solar} battery set {battery_value} real {battery}")
@@ -109,12 +109,12 @@ if grid_on == False and battery > 14.1 and solar_on == True:
     print(f"{dt} SOLAR switch off, baterka ma: {battery} solar je:{solar}")
     logging.warning(f" solar switch off now, solar {solar} battery {battery}")
     
-if grid_on == False and battery < 13 and solar_off == True:
+if battery < 13 and solar_off == True:
     GPIO.output(pinsolar, GPIO.LOW)
     print(f"{dt} solar switch ON now, baterka ma: {battery} solar je:{solar}")
     logging.warning(f" solar switch ON now, solar {solar} battery {battery}")
     
-if grid_on == False and battery < 12.8 and load_on == True:
+if battery < 12.8 and load_on == True:
     GPIO.output(pinload, GPIO.HIGH)
     print(f"{dt} load switch off,baterka ma: {battery} solar je:{solar}")
     logging.warning(f" load switch off now, solar {solar} battery {battery}")
